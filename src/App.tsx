@@ -31,7 +31,7 @@ const App = () => {
   return (
     <>
       <div className="container flex flex-col justify-center items-center">
-        <div className="banner-container p-10">
+        <div className="banner-container p-5">
           <h1 className="text-5xl">Elige el mejor presupuesto</h1>
         </div>
         <BudgetPanel budgetOptions={budgetOptions}></BudgetPanel>
