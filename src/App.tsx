@@ -8,22 +8,22 @@ const budgetOptions: BudgetOptions = [
     title: "SEO",
     description:
       "Servicio de Entorno Ocultado. No podrás encontrar tu web ni con IA.",
-    prize: 300,
-    checkboxAdd: false,
+    price: 300,
+    id: '1'
   },
   {
     title: "Ads",
     description:
       "Haremos propaganda de tu página web en radios AM y canales de aire.",
-    prize: 400,
-    checkboxAdd: false,
+    price: 400,
+    id: '2'
   },
   {
     title: "Web",
     description:
       "Una web poco responsiva. Prepárate para ver cada div desborado, combiando colores de lo más hortera.",
-    prize: 500,
-    checkboxAdd: false,
+    price: 500,
+    id: '3'
   },
 ];
 

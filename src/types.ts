@@ -1,8 +1,8 @@
 export type BudgetOption = {
     title: string;
     description: string;
-    prize: number;
-    checkboxAdd: boolean;
+    price: number;
+    id: string;
   };
   
   
