@@ -11,12 +11,18 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [select, setSelect] = useState<number[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [customTotal, setCustomTotal] = useState(0);
   const specialOptionId = "3";
 
   useEffect(() => {
-    const total = select.reduce((acc, current) => acc + current, 0);
+    const total =
+      select.reduce((acc, current) => acc + current, 0) + customTotal;
     setTotalPrice(total);
-  }, [select]);
+  }, [select, customTotal]);
+
+  const handleCustomTotal = (customTotal: number) => {
+    setCustomTotal(customTotal);
+  };
 
   const handleCheckBox = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -32,6 +38,8 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
     } else {
       setSelect(select.filter((item) => item !== price));
       setSelectedIds(selectedIds.filter((item) => item !== id));
+        if 
+          (id === specialOptionId) setCustomTotal(0);
     }
   };
 
@@ -66,7 +74,7 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
           <div className="flex justify-end w-full">
             {option.id === specialOptionId &&
             selectedIds.includes(option.id) ? (
-              <WebCustom />
+              <WebCustom onCustomTotal={handleCustomTotal} />
             ) : null}
           </div>
         </div>

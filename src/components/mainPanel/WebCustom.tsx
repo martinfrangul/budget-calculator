@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const WebCustom = () => {
+interface WebCustomProps {
+    onCustomTotal: (customTotal: number) => void;
+  }
+
+const WebCustom: React.FC<WebCustomProps>  = ({ onCustomTotal }) => {
   const [pages, setPages] = useState(0);
   const [lang, setLang] = useState(0);
 
@@ -20,15 +24,22 @@ const WebCustom = () => {
     if (pages > 0) setLang((prev) => prev - 1);
   };
 
-  const userSetPages = (e) => {
+  const userSetPages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userPages = parseFloat(e.target.value);
     setPages(userPages);
   };
 
-  const userSetLang = (e) => {
+  const userSetLang = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userLang = e.target.value;
-    setLang(userLang);
+    setLang(parseFloat(userLang));
   };
+
+ 
+
+  useEffect(() => {
+    const customPrice = (pages + lang) * 30;
+    onCustomTotal(customPrice);
+  }, [pages, lang, onCustomTotal]);
 
   return (
     <>
@@ -57,7 +68,7 @@ const WebCustom = () => {
             value={lang}
             onChange={userSetLang}
           />
-        <button onClick={addLang}>+</button>
+          <button onClick={addLang}>+</button>
         </div>
       </div>
     </>
