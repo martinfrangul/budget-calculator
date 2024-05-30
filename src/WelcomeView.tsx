@@ -1,12 +1,9 @@
 import "./styles/WelcomeView.css";
 import { motion } from "framer-motion";
 import "./fonts.css";
+import { NavLink } from "react-router-dom";
 
-interface welcomeViewProps {
-  toWelcomeView: () => void;
-}
-
-const WelcomeView: React.FC<welcomeViewProps> = ({toWelcomeView}) => {
+const WelcomeView = () => {
   return (
     <div className="container flex flex-col justify-center items-center h-screen">
       <div
@@ -17,26 +14,35 @@ const WelcomeView: React.FC<welcomeViewProps> = ({toWelcomeView}) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 3 }}
+          
           className="text-6xl title"
         >
           ¡Bienvenide!
         </motion.h1>
         <div className="p-5 border-y-purple-700 border-y-8 border-opacity-25">
-          <p className="welcome-text text-4xl max-w-4xl text-center leading-[4rem]">
+          <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.25, duration: 3 }}
+          className="welcome-text text-4xl max-w-4xl text-center leading-[4rem]"
+          >
             En esta sencilla web podrás calcular el presupuesto para nuestros
             diferentes servicios, así como guardar tus presupuestos, buscarte y
             filtrarte.
-          </p>
+          </motion.p>
         </div>
-        <motion.button
+        <NavLink to={"/home"}>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           whileHover={{ backgroundColor: "#3E6608" }}
-          transition={{ duration: 0.5 }}
           whileTap={{ scale: 0.9 }}
           className="btn bg-lime-600 text-white rounded-full p-4"
-          onClick={toWelcomeView}
         >
           Comenzar
-        </motion.button>
+        </motion.div>
+        </NavLink>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
+// import WelcomeView from "./WelcomeView";
 import BudgetPanel from "./components/mainPanel/BadgetPanel";
 import { BudgetOptions } from "./types";
+import { NavLink } from "react-router-dom";
 
-interface MainViewProps {
-  toMainView: () => void;
-}
+
 
 const budgetOptions: BudgetOptions = [
     {
@@ -30,7 +30,7 @@ const budgetOptions: BudgetOptions = [
     },
   ];
 
-const MainView: React.FC<MainViewProps> = ({toMainView}) => {
+const Home = () => {
     return ( 
         <div className="flex flex-row justify-center">
         <div className="container flex flex-col justify-center items-center">
@@ -40,18 +40,19 @@ const MainView: React.FC<MainViewProps> = ({toMainView}) => {
           <BudgetPanel budgetOptions={budgetOptions}></BudgetPanel>
         </div>
         <div className="flex justify-end items-end h-fit">
-          <motion.button
-          onClick={toMainView}
+        <NavLink to={"/"}>Volver</NavLink>
+
+          {/* <motion.button
             whileHover={{ backgroundColor: "#3E6608" }}
             transition={{ duration: 0.5 }}
             whileTap={{ scale: 0.9 }}
             className="btn-lg bg-red-600 text-white rounded-2xl p-4 font-semibold"
           >
             Volver
-          </motion.button>
+          </motion.button> */}
         </div>
       </div>
      );
 }
  
-export default MainView;
+export default Home;
