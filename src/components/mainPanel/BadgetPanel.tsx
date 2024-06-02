@@ -1,24 +1,44 @@
 import { BudgetOptions } from "../../types";
 import "../../styles/index.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import WebCustom from "./WebCustom";
+import "../../styles/BadgetPanel.css";
+import { SelectContext } from "../../contexts/SelectContext";
+
+
+
 
 type BudgetPanelProps = {
   budgetOptions: BudgetOptions;
 };
 
+interface OptionObject {
+  price: number;
+  id: string;
+  service: string;
+}
+
+
+
 const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [select, setSelect] = useState<number[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [customTotal, setCustomTotal] = useState(0);
   const specialOptionId = "3";
 
+  const context = useContext(SelectContext);
+
+  if (!context) {
+    throw new Error('BudgetPanel must be used within a SelectProvider');
+  }
+
+  const { total, setTotal, select, setSelect } = context;
+
+  
   useEffect(() => {
-    const total =
-      select.reduce((acc, current) => acc + current, 0) + customTotal;
-    setTotalPrice(total);
-  }, [select, customTotal]);
+    const totalPrice =
+      select.map((item) => item.price).reduce((acc, current) => acc + current + customTotal, 0);
+    setTotal(totalPrice);
+  }, [select, customTotal, setSelect, setTotal]);
 
   const handleCustomTotal = (customTotal: number) => {
     setCustomTotal(customTotal);
@@ -27,31 +47,40 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
   const handleCheckBox = (
     event: React.ChangeEvent<HTMLInputElement>,
     priceItem: number,
-    id: string
+    id: string,
+    service: string
   ) => {
-    const price = priceItem;
+
+    
+    const optionObject: OptionObject = {
+      price: priceItem,
+      id: id,
+      service: service,
+    };
 
     const checked = event.target.checked;
     if (checked) {
-      setSelect([...select, price]);
+      setSelect([...select, optionObject]);
       setSelectedIds([...selectedIds, id]);
     } else {
-      setSelect(select.filter((item) => item !== price));
+      setSelect(select.filter((item) => item.id !== id));
       setSelectedIds(selectedIds.filter((item) => item !== id));
-        if 
-          (id === specialOptionId) setCustomTotal(0);
+      if (id === specialOptionId) setCustomTotal(0);
     }
   };
 
+
   return (
-    <div className="grid grid-flow-row gap-y-10">
+    <div className="flex flex-col gap-y-6 justify-center items-center">
       {budgetOptions.map((option, index) => (
         <div
-          className="budget-container flex flex-row flex-wrap justify-between p-3 shadow-inner h-fit rounded-2xl border-none shadow-gray-500"
+          className="budget-container flex flex-row flex-wrap bg-[#FDFDFD] justify-center items-center p-3 h-fit rounded-2xl border-2 border-solid border-black"
           key={index}
+
+          // shadow-inner h-fit rounded-2xl border-none shadow-gray-500
         >
           <div className=" flex flex-row justify-between w-full">
-            <div className="flex flex-col max-w-60 p-4">
+            <div className="flex flex-col max-w-60 p-4 ">
               <h2 className="text-3xl">{option.title}</h2>
               <p>{option.description}</p>
             </div>
@@ -65,7 +94,7 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
                 name=""
                 id={option.id}
                 onChange={(e) => {
-                  handleCheckBox(e, option.price, option.id);
+                  handleCheckBox(e, option.price, option.id, option.title);
                 }}
               ></input>
               <label className="form-check-label">Agregar</label>
@@ -79,7 +108,11 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
           </div>
         </div>
       ))}
-      <div className="text-2xl">{totalPrice}</div>
+      <div className="total-text-container flex justify-end w-full">
+        <div className="text-4xl total-text">
+          Precio presupuestado: {total} $
+        </div>
+      </div>
     </div>
   );
 };

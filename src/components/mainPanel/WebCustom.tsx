@@ -1,12 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
+import { SelectContext } from "../../contexts/SelectContext";
 
 interface WebCustomProps {
     onCustomTotal: (customTotal: number) => void;
   }
 
-const WebCustom: React.FC<WebCustomProps>  = ({ onCustomTotal }) => {
-  const [pages, setPages] = useState(0);
-  const [lang, setLang] = useState(0);
+  
+  
+  const WebCustom: React.FC<WebCustomProps>  = ({ onCustomTotal }) => {
+    
+  const context = useContext(SelectContext);
+    
+  if (!context) {
+      throw new Error("FormBudget must be used within a SelectProvider");
+  }
+  
+  const { pages, lang, setPages, setLang } = context;
+
 
   const addPages = () => {
     setPages((prev) => prev + 1);
