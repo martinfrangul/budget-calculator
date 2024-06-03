@@ -5,15 +5,22 @@ interface OptionObject {
   id: string;
   service: string;
 }
+
+interface specialOptions {
+  [key: string]: number;
+}
+
 interface BudgetItem {
   name: string;
   phone: string;
   email: string;
   total: number;
   services: string[];
+  specialOptions: specialOptions
+  
 }
 
-interface SelectContextType {
+interface MainContextType {
   total: number;
   setTotal: Dispatch<SetStateAction<number>>;
   select: OptionObject[];
@@ -24,18 +31,20 @@ interface SelectContextType {
   lang: number;
   setPages: Dispatch<SetStateAction<number>>;
   setLang: Dispatch<SetStateAction<number>>;
-
+  selectedIds: string[];
+  setSelectedIds: Dispatch<SetStateAction<string[]>>
 
 }
 
 
-const SelectContext = createContext<SelectContextType | undefined>(undefined);
+const MainContext = createContext<MainContextType | undefined>(undefined);
 
-interface SelectProviderProps {
+interface MainProviderProps {
     children: React.ReactNode;
   }
 
-const SelectProvider: React.FC<SelectProviderProps> = ({ children }) => {
+
+const MainProvider: React.FC<MainProviderProps> = ({ children }) => {
   const [select, setSelect] = useState<OptionObject[]>([]);
   const [total, setTotal] = useState(0)
   const [budgetItem, setBudgetItem] = useState<BudgetItem>({
@@ -44,16 +53,18 @@ const SelectProvider: React.FC<SelectProviderProps> = ({ children }) => {
     email: '',
     total: 0,
     services: [],
+    specialOptions: {}
   })
   const [pages, setPages] = useState(0);
   const [lang, setLang] = useState(0);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   
 
   return (
-    <SelectContext.Provider value={{setPages, setLang, pages, lang, budgetItem, setBudgetItem, select, setSelect, total, setTotal }}>
+    <MainContext.Provider value={{selectedIds, setSelectedIds, setPages, setLang, pages, lang, budgetItem, setBudgetItem, select, setSelect, total, setTotal }}>
       {children}
-    </SelectContext.Provider>
+    </MainContext.Provider>
   );
 };
 
-export { SelectContext, SelectProvider };
+export { MainContext, MainProvider };

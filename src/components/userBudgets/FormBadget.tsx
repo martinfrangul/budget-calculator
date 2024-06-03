@@ -1,5 +1,5 @@
 import { useState, FormEvent, useContext } from "react";
-import { SelectContext } from "../../contexts/SelectContext";
+import { MainContext } from "../../contexts/MainContext";
 
 const FormBudget = () => {
   const [name, setName] = useState<string>("");
@@ -7,16 +7,14 @@ const FormBudget = () => {
   const [email, setEmail] = useState<string>("");
 
   // Me aseguro de que "select" no sea undefined
-
-  const context = useContext(SelectContext);
-
+  
+  const context = useContext(MainContext);
+  
   if (!context) {
     throw new Error("FormBudget must be used within a SelectProvider");
   }
-
-  // SI AGREGO DEL CONTEXTO PAGES Y LANG Y LO AGREGO AL NEWBUDGETITEM FUNCIONA
-
-  const { total, select, setBudgetItem, pages, lang } = context;
+  
+  const { selectedIds, setSelectedIds, total, select, setSelect, setBudgetItem, pages, lang, setPages, setLang } = context;
 
   const services = select.map((item) => item.service);
 
@@ -35,8 +33,25 @@ const FormBudget = () => {
         lang: lang,
       },
     };
-    setBudgetItem(newBudgetItem);
-    console.log(newBudgetItem);
+
+    
+    // MANEJO DE ERRORES
+    
+    const emptyCheck = 'Tienes que elegir alguna opción para crear un presupuesto'
+
+    if (selectedIds.length === 0) {
+        alert(emptyCheck);
+    } 
+    else {
+      setBudgetItem(newBudgetItem);
+      setName('')
+      setPhone('')
+      setEmail('')
+      setSelectedIds([]); // Limpiar checkboxes
+      setSelect([]); // Limpiar selección de servicios
+      setPages(0); // Limpiar páginas
+      setLang(0); // Limpiar lenguajes
+    } 
   };
 
   //

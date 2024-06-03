@@ -1,15 +1,13 @@
 import { useEffect, useContext } from "react";
-import { SelectContext } from "../../contexts/SelectContext";
+import { MainContext } from "../../contexts/MainContext";
 
 interface WebCustomProps {
     onCustomTotal: (customTotal: number) => void;
   }
-
-  
   
   const WebCustom: React.FC<WebCustomProps>  = ({ onCustomTotal }) => {
     
-  const context = useContext(SelectContext);
+  const context = useContext(MainContext);
     
   if (!context) {
       throw new Error("FormBudget must be used within a SelectProvider");
@@ -23,7 +21,8 @@ interface WebCustomProps {
   };
 
   const subsPages = () => {
-    if (pages > 0) setPages((prev) => prev - 1);
+    if (pages > 0)
+      setPages((prev) => prev - 1);
   };
 
   const addLang = () => {
@@ -31,7 +30,7 @@ interface WebCustomProps {
   };
 
   const subsLang = () => {
-    if (pages > 0) setLang((prev) => prev - 1);
+    if (lang > 0) setLang((prev) => prev - 1);
   };
 
   const userSetPages = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,8 +39,8 @@ interface WebCustomProps {
   };
 
   const userSetLang = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userLang = e.target.value;
-    setLang(parseFloat(userLang));
+    const userLang = parseFloat(e.target.value);
+    setLang(userLang);
   };
 
  

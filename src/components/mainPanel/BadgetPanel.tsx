@@ -3,7 +3,7 @@ import "../../styles/index.css";
 import { useEffect, useState, useContext } from "react";
 import WebCustom from "./WebCustom";
 import "../../styles/BadgetPanel.css";
-import { SelectContext } from "../../contexts/SelectContext";
+import { MainContext } from "../../contexts/MainContext";
 
 
 
@@ -21,17 +21,16 @@ interface OptionObject {
 
 
 const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [customTotal, setCustomTotal] = useState(0);
   const specialOptionId = "3";
 
-  const context = useContext(SelectContext);
+  const context = useContext(MainContext);
 
   if (!context) {
     throw new Error('BudgetPanel must be used within a SelectProvider');
   }
 
-  const { total, setTotal, select, setSelect } = context;
+  const {selectedIds, setSelectedIds, total, setTotal, select, setSelect } = context;
 
   
   useEffect(() => {
@@ -93,6 +92,7 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
                 className="form-check-input"
                 name=""
                 id={option.id}
+                checked={selectedIds.includes(option.id)} 
                 onChange={(e) => {
                   handleCheckBox(e, option.price, option.id, option.title);
                 }}

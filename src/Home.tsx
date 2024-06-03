@@ -4,7 +4,7 @@ import { BudgetOptions } from "./types";
 import { NavLink } from "react-router-dom";
 import "./styles/Home.css";
 import FormBudget from "./components/userBudgets/FormBadget";
-import { SelectProvider } from './contexts/SelectContext';
+import { MainProvider } from './contexts/MainContext';
 import BudgetList from "./components/userBudgets/BadgetList";
 
 const budgetOptions: BudgetOptions = [
@@ -33,7 +33,7 @@ const budgetOptions: BudgetOptions = [
 
 const Home = () => {
   return (
-    <SelectProvider>
+    <MainProvider>
     <div className="flex flex-row justify-center">
       <div>
         <div className="container flex flex-col justify-center items-center mb-16">
@@ -60,7 +60,7 @@ const Home = () => {
       </NavLink>
     </div>
     <BudgetList />
-    </SelectProvider>
+    </MainProvider>
   );
 };
 
