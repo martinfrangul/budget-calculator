@@ -44,4 +44,7 @@ body {
   .border-custom {
     @apply shadow-inner shadow-gray-500 border-none;
   }
+  .text-custom {
+    @apply font-semibold
+  }
 }
