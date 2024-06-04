@@ -5,9 +5,6 @@ import WebCustom from "./WebCustom";
 import "../../styles/BadgetPanel.css";
 import { MainContext } from "../../contexts/MainContext";
 
-
-
-
 type BudgetPanelProps = {
   budgetOptions: BudgetOptions;
 };
@@ -18,8 +15,6 @@ interface OptionObject {
   service: string;
 }
 
-
-
 const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
   const [customTotal, setCustomTotal] = useState(0);
   const specialOptionId = "3";
@@ -27,15 +22,16 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
   const context = useContext(MainContext);
 
   if (!context) {
-    throw new Error('BudgetPanel must be used within a SelectProvider');
+    throw new Error("BudgetPanel must be used within a MainProvider");
   }
 
-  const {selectedIds, setSelectedIds, total, setTotal, select, setSelect } = context;
+  const { selectedIds, setSelectedIds, total, setTotal, select, setSelect } =
+    context;
 
-  
   useEffect(() => {
-    const totalPrice =
-      select.map((item) => item.price).reduce((acc, current) => acc + current + customTotal, 0);
+    const totalPrice = select
+      .map((item) => item.price)
+      .reduce((acc, current) => acc + current + customTotal, 0);
     setTotal(totalPrice);
   }, [select, customTotal, setSelect, setTotal]);
 
@@ -49,8 +45,6 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
     id: string,
     service: string
   ) => {
-
-    
     const optionObject: OptionObject = {
       price: priceItem,
       id: id,
@@ -68,18 +62,18 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
     }
   };
 
-
   return (
     <div className="flex flex-col gap-y-6 justify-center items-center">
       {budgetOptions.map((option, index) => (
         <div
-          className="budget-container flex flex-row flex-wrap bg-[#FDFDFD] justify-center items-center p-3 h-fit rounded-2xl border-2 border-solid border-black"
+          className={`budget-container flex flex-row flex-wrap bg-[#FDFDFD] justify-center items-center p-3 h-fit rounded-2xl border-2 border-solid border-black ${
+            selectedIds.includes(option.id) ? "border-custom" : ""
+          }`}
           key={index}
-
-          // shadow-inner h-fit rounded-2xl border-none shadow-gray-500
+          // shadow-inner shadow-gray-500 border-none
         >
           <div className=" flex flex-row justify-between w-full">
-            <div className="flex flex-col max-w-60 p-4 ">
+            <div className="flex flex-col max-w-60 p-4 gap-3">
               <h2 className="text-3xl">{option.title}</h2>
               <p>{option.description}</p>
             </div>
@@ -92,7 +86,7 @@ const BadgetPanel = ({ budgetOptions }: BudgetPanelProps) => {
                 className="form-check-input"
                 name=""
                 id={option.id}
-                checked={selectedIds.includes(option.id)} 
+                checked={selectedIds.includes(option.id)}
                 onChange={(e) => {
                   handleCheckBox(e, option.price, option.id, option.title);
                 }}

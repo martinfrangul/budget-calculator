@@ -1,40 +1,5 @@
-import React, { createContext, useState, Dispatch, SetStateAction } from 'react';
-
-interface OptionObject {
-  price: number;
-  id: string;
-  service: string;
-}
-
-interface specialOptions {
-  [key: string]: number;
-}
-
-interface BudgetItem {
-  name: string;
-  phone: string;
-  email: string;
-  total: number;
-  services: string[];
-  specialOptions: specialOptions
-  
-}
-
-interface MainContextType {
-  total: number;
-  setTotal: Dispatch<SetStateAction<number>>;
-  select: OptionObject[];
-  setSelect: Dispatch<SetStateAction<OptionObject[]>>;
-  budgetItem: BudgetItem;
-  setBudgetItem: Dispatch<SetStateAction<BudgetItem>>;
-  pages: number;
-  lang: number;
-  setPages: Dispatch<SetStateAction<number>>;
-  setLang: Dispatch<SetStateAction<number>>;
-  selectedIds: string[];
-  setSelectedIds: Dispatch<SetStateAction<string[]>>
-
-}
+import React, { createContext, useState } from 'react';
+import { BudgetItem, OptionObject, MainContextType } from "../types";
 
 
 const MainContext = createContext<MainContextType | undefined>(undefined);
@@ -42,7 +7,6 @@ const MainContext = createContext<MainContextType | undefined>(undefined);
 interface MainProviderProps {
     children: React.ReactNode;
   }
-
 
 const MainProvider: React.FC<MainProviderProps> = ({ children }) => {
   const [select, setSelect] = useState<OptionObject[]>([]);
@@ -53,7 +17,8 @@ const MainProvider: React.FC<MainProviderProps> = ({ children }) => {
     email: '',
     total: 0,
     services: [],
-    specialOptions: {}
+    specialOptions: {},
+    date: new Date()
   })
   const [pages, setPages] = useState(0);
   const [lang, setLang] = useState(0);

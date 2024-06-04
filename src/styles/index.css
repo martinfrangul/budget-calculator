@@ -39,3 +39,9 @@ body {
   width: 50rem;
   
 }
+
+@layer utilities {
+  .border-custom {
+    @apply shadow-inner shadow-gray-500 border-none;
+  }
+}

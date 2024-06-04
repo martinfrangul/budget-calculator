@@ -5,19 +5,21 @@ const FormBudget = () => {
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const date = new Date;
 
-  // Me aseguro de que "select" no sea undefined
-  
+  // IMPORTO EL CONTEXTO
+
   const context = useContext(MainContext);
   
   if (!context) {
-    throw new Error("FormBudget must be used within a SelectProvider");
+    throw new Error("FormBudget must be used within a MainProvider");
   }
-  
   const { selectedIds, setSelectedIds, total, select, setSelect, setBudgetItem, pages, lang, setPages, setLang } = context;
-
   const services = select.map((item) => item.service);
 
+
+  /////////////////7
+  
   // Objeto que se crea al clickear submit
 
   const submitForm = (e: FormEvent) => {
@@ -32,10 +34,12 @@ const FormBudget = () => {
         pages: pages,
         lang: lang,
       },
+      date: date
+
     };
 
     
-    // MANEJO DE ERRORES
+    // MANEJO DE ERRORES Y LIMPIAR DATOS
     
     const emptyCheck = 'Tienes que elegir alguna opción para crear un presupuesto'
 
@@ -47,17 +51,17 @@ const FormBudget = () => {
       setName('')
       setPhone('')
       setEmail('')
-      setSelectedIds([]); // Limpiar checkboxes
-      setSelect([]); // Limpiar selección de servicios
-      setPages(0); // Limpiar páginas
-      setLang(0); // Limpiar lenguajes
+      setSelectedIds([]);
+      setSelect([]);
+      setPages(0);
+      setLang(0);
     } 
   };
 
   //
 
   return (
-    <div className="container form-container p-10 justify-center items-center bg-[#FDFDFD] ">
+    <div className="container form-container p-10 justify-center items-center bg-[#FDFDFD] rounded-xl">
       <form onSubmit={submitForm} className="flex flex-row gap-3 items-center ">
         <div>
           <label htmlFor="name" className="mx-3">
