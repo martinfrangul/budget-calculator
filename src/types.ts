@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 export type BudgetOption = {
-    title: string;
+    service: string;
     description: string;
     price: number;
     id: string;

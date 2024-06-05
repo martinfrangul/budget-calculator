@@ -9,21 +9,21 @@ import BudgetList from "./components/userBudgets/BadgetList";
 
 const budgetOptions: BudgetOptions = [
   {
-    title: "SEO",
+    service: "SEO",
     description:
       "Servicio de Entorno Ocultado. No podrás encontrar tu web ni con IA.",
     price: 300,
     id: "1",
   },
   {
-    title: "Ads",
+    service: "Ads",
     description:
       "Haremos propaganda de tu página web en radios AM y canales de aire.",
     price: 400,
     id: "2",
   },
   {
-    title: "Web",
+    service: "Web",
     description:
       "Una web poco responsiva. Prepárate para ver cada div desborado, combiando colores de lo más hortera.",
     price: 500,
@@ -43,6 +43,7 @@ const Home = () => {
                   Calculadora de presupuestos
                 </h1>
               </div>
+              
             </div>
             <BudgetPanel budgetOptions={budgetOptions}></BudgetPanel>
           </div>
